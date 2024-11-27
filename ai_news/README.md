@@ -1,54 +1,77 @@
-# AiNews Crew
 
-Welcome to the AiNews Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+# AI News Scraper
+
+AI News Scraper is a Python-based project that leverages CrewAI tools to scrape and save the latest news articles from the web. Users can specify topics of interest, and the scraper dynamically fetches relevant news from reputable websites, storing them in a structured format.
+
+## Features
+- **Customizable Topics**: Specify the topics of interest to scrape targeted news.
+- **Timestamped Organization**: Saves news articles with timestamps for better categorization.
+- **CrewAI Integration**: Utilizes `SerperDevTool` and `ScrapeWebsiteTool` from CrewAI for efficient scraping.
+- **Automated Task Management**: Automatically interpolates tasks and agents for a seamless scraping experience.
+
+## File Structure
+```plaintext
+ai_news/
+├── src/
+│   ├── ai_news/
+│   │   ├── config/
+│   │   │   ├── agents.yaml   # Configuration for scraping agents
+│   │   │   ├── tasks.yaml    # Configuration for scraping tasks
+│   │   ├── tools/
+│   │   │   ├── crew.py       # CrewAI setup and initialization
+│   │   │   ├── main.py       # Entry point to run the scraper
+├── tests/                    # Unit tests for project components
+├── news/                     # Output folder for saved news articles
+├── .env                      # Environment variables (e.g., API keys)
+├── .gitignore                # Ignored files for Git
+├── pyproject.toml            # Dependency and project configuration
+├── README.md                 # This documentation
+```
 
 ## Installation
 
-Ensure you have Python >=3.10 <=3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+1. **Clone the Repository**
+   ```bash
+   git clone <https://github.com/Prahaladha-Reddy/Ai_News_Scrapper>
+   cd ai_news
+   ```
 
-First, if you haven't already, install uv:
+2. **Set Up Environment**
+   - Create a `.env` file in the project root and configure it with the necessary secrets (e.g., API keys).
+   - Example:
+     ```env
+     SERPER_API_KEY=your_api_key
+     ```
 
-```bash
-pip install uv
-```
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Next, navigate to your project directory and install the dependencies:
+## Usage
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
+1. **Edit `main.py`**
+   - Specify the topic you want to scrape and the timestamp format:
+     ```python
+     inputs = {
+         'topic': 'openai',
+         'date': datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+     }
+     ```
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+2. **Run the Script**
+   ```bash
+   python src/ai_news/tools/main.py
+   ```
 
-- Modify `src/ai_news/config/agents.yaml` to define your agents
-- Modify `src/ai_news/config/tasks.yaml` to define your tasks
-- Modify `src/ai_news/crew.py` to add your own logic, tools and specific args
-- Modify `src/ai_news/main.py` to add custom inputs for your agents and tasks
+3. **View Results**
+   - The scraped news articles are saved in the `news/` directory, with filenames based on the timestamp.
 
-## Running the Project
+## Technologies Used
+- **Python**: Core programming language for the project.
+- **CrewAI Tools**:
+  - `SerperDevTool`: For precise web scraping.
+  - `ScrapeWebsiteTool`: To extract structured data from news websites.
+- **Dependency Management**: Managed via `pyproject.toml`.
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
 
-```bash
-$ crewai run
-```
-
-This command initializes the ai-news Crew, assembling the agents and assigning them tasks as defined in your configuration.
-
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
-
-## Understanding Your Crew
-
-The ai-news Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
-
-## Support
-
-For support, questions, or feedback regarding the AiNews Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
-
-Let's create wonders together with the power and simplicity of crewAI.
