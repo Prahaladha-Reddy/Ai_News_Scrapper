@@ -1,40 +1,40 @@
 #!/usr/bin/env python
-import sys
+import os
 import warnings
 from datetime import datetime
 from crew import AiNews
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
-
 def run():
     """
-    Run the crew.
+    Run the AiNews crew for multiple topics.
     """
-    inputs = {
-        'topic': 'openai',
-        'date': datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    }
 
-    # inputs_array = [
-    #     {
-    #         'topic': 'ai agents',
-    #         'date': datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    #     }, 
-    #     {
-    #         'topic': 'openai',
-    #         'date': datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    #     },
-    #     {
-    #         'topic': 'hugging face',
-    #         'date': datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    #     }
-    # ]
+    # List of topics to process
+    topics = [
+        
+        "Generative AI trends"
+    ]
 
-    AiNews().crew().kickoff(inputs=inputs)
+    # Prepare inputs array with multiple topics
+    inputs_array = [
+        {
+            'topic': topic,
+            'date': datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        }
+        for topic in topics
+    ]
 
-run()
+    print("Inputs for tasks:", inputs_array)  # Debugging inputs
+
+    # Ensure output directory exists
+    output_directory = "news"
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    # Run the crew for each topic
+    AiNews().crew().kickoff_for_each(inputs=inputs_array)
+
+if __name__ == "__main__":
+    run()
